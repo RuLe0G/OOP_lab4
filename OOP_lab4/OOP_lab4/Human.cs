@@ -78,7 +78,7 @@ namespace OOP_lab4
         public void CarArrived(object sender, EventArgs e)
         {
             chelvmashine?.Invoke(this, EventArgs.Empty);
-            MessageBox.Show("Машина прибыла к пассажиру.");
+            MessageBox.Show("Человек в машине");
 
         }
 

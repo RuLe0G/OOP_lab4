@@ -109,15 +109,15 @@ namespace OOP_lab4
                         Follow?.Invoke(this, null);
                     }
                 });
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
             }
             if (chel == null)
-            {                
+            {
                 Arrived?.Invoke(this, null);
             }
             else
             {
-                MessageBox.Show("Вы прибыли в пункт назначения.");
+                MessageBox.Show("Приехали");
                 newThread.Abort();
                 chel = null;
 

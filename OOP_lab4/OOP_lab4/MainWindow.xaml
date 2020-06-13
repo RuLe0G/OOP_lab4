@@ -10,21 +10,38 @@
     <Grid>
 
         <WindowsPresentation:GMapControl  Name="Map" Loaded="MapLoaded" Width="581" Height="419" HorizontalAlignment="Left" Visibility="Visible" MouseLeftButtonDown="Map_MouseLeftButtonDown"/>
-        <TextBox HorizontalAlignment="Left" Height="39" Margin="592,5,-1.4,0" TextWrapping="Wrap" Text="Режим курсора" VerticalAlignment="Top" Width="199"/>
-        <TextBox HorizontalAlignment="Left" Height="64" Margin="592,50,-1.4,0" TextWrapping="Wrap" Text="Добавить" VerticalAlignment="Top" Width="199" IsEnabled="False"/>
-        <TextBox HorizontalAlignment="Left" Height="301" Margin="592,136,-1.4,0" TextWrapping="Wrap" Text="Поиск&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;Результаты поиска" VerticalAlignment="Top" Width="199" IsEnabled="False"/>
-        <ComboBox x:Name="objType" HorizontalAlignment="Left" Margin="601,68,0,0" VerticalAlignment="Top" Width="116" Height="18" SelectedIndex="0" IsEnabled="False">
-            <ListBoxItem Content="Машина"/>
-            <ListBoxItem Content="Человек"/>
-            <ListBoxItem Content="Точка назначения"/>
+
+        <Label Content="Добавить" HorizontalAlignment="Left" Margin="592,91,0,0" VerticalAlignment="Top" Width="184" Height="130" BorderBrush="Black" BorderThickness="1"/>
+        <TextBox x:Name="tb_name" HorizontalAlignment="Left" Height="22" Margin="642,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="593,112,0,0" VerticalAlignment="Top" Height="22" Width="49" />
+        <Button Content="Чистить" HorizontalAlignment="Left" Margin="707,0,0,0" VerticalAlignment="Top" Width="69" Click="Button_Click" Height="21"/>
+        <Button x:Name="RoutMap" Content="Поехали" HorizontalAlignment="Left" Margin="603,166,0,0" VerticalAlignment="Top" Width="164" Height="41" Click="RoutMap_Click"/>
+
+        <ComboBox x:Name="Secret" Margin="592,0,157,0" VerticalAlignment="Top" Height="7" SelectionChanged="Secret_SelectionChanged">
+            <ListBoxItem Content="Base"/>
+            <ListBoxItem Content="GoogleMap"/>
+            <ListBoxItem Content="GoogleSatelliteMap"/>
+            <ListBoxItem Content="GoogleHybridMap"/>
+            <ListBoxItem Content="BingMap"/>
+            <ListBoxItem Content="YandexMap"/>
+            <ListBoxItem Content="WikiMapiaMap"/>
         </ComboBox>
-        <TextBox x:Name="objTitle" HorizontalAlignment="Left" Height="13" Margin="649,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136" FontSize="9" IsEnabled="False"/>
-        <Label Content="Название:" HorizontalAlignment="Left" Margin="601,86,0,0" VerticalAlignment="Top" Height="22" Width="49" FontSize="9" />
-        <ListBox x:Name="objectList" HorizontalAlignment="Left" Height="156" Margin="601,211,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="ObjectList_SelectionChanged"/>
-        <CheckBox x:Name="CHm" Content="Создание" HorizontalAlignment="Left" Margin="601,26,0,0" VerticalAlignment="Top" Checked="CHm_Checked" Height="24" Width="81"/>
-        <CheckBox x:Name="NCHm" Content="Перемещение" HorizontalAlignment="Left" Margin="686,26,0,0" VerticalAlignment="Top" Checked="NCHm_Checked" IsChecked="True" Height="24" Width="98"/>
-        <TextBox x:Name="poisk" HorizontalAlignment="Left" Height="19" Margin="601,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="184" FontSize="9" TextChanged="TextBox_TextChanged"/>
-        <Button x:Name="RoutMap" Content="Построить маршрут" HorizontalAlignment="Left" Margin="601,372,0,0" VerticalAlignment="Top" Width="179" Height="56" Click="RoutMap_Click"/>
+
+        <Label Content="Режимы курсора:" HorizontalAlignment="Left" Margin="592,21,0,0" VerticalAlignment="Top" Width="184" Height="65" BorderBrush="Black" BorderThickness="1" />
+        <CheckBox x:Name="Mouset1" Content="Режим создания" HorizontalAlignment="Left" Margin="603,47,0,0" VerticalAlignment="Top" Width="116" Checked="Mouset1_Checked" />
+        <CheckBox x:Name="Mouset2" Content="Режим передвижения" HorizontalAlignment="Left" Margin="603,67,0,0" VerticalAlignment="Top" Width="116" Checked="Mouset2_Checked" IsChecked="True"/>
+        <Label Content="Поиск" HorizontalAlignment="Left" Margin="593,226,0,-1" VerticalAlignment="Top" Width="184" Height="195" BorderBrush="Black" BorderThickness="1"/>
+
+        
+        <ComboBox x:Name="cb_add" HorizontalAlignment="Left" Margin="603,139,0,0" VerticalAlignment="Top" Width="164" SelectedIndex="0">
+            <ComboBoxItem Content="0. Машина"/>
+            <ComboBoxItem Content="1. Чел"/>
+            <ComboBoxItem Content="2. Точка назначения"/>
+        </ComboBox>
+
+
+        <TextBox x:Name="tb_search" HorizontalAlignment="Left" Height="23" Margin="603,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" TextChanged="TextBox_TextChanged" />
+        <ListBox x:Name="lb_search" HorizontalAlignment="Left" Height="133" Margin="603,280,0,0" VerticalAlignment="Top" Width="164" SelectionChanged="lb_search_SelectionChanged"/>
 
     </Grid>
 </Window>

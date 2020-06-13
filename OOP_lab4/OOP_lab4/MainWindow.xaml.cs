@@ -27,7 +27,6 @@ namespace OOP_lab4
         private List<MapObject> MapObjects = new List<MapObject>();
         private List<PointLatLng> Point = new List<PointLatLng>();
 
-        Route Route = null;
         Human Human = null;
         Car Car = null;
         public GMapMarker marker_chelik = null;
@@ -65,16 +64,16 @@ namespace OOP_lab4
         private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             PointLatLng point = Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y);
-            if (CHm.IsChecked == true)
+            if (Mouset1.IsChecked == true)
             {
 
                 Point.Add(point);
 
-                if (objType.SelectedIndex > -1)
+                if (cb_add.SelectedIndex > -1)
                 {
-                    if (objType.SelectedIndex == 0)
+                    if (cb_add.SelectedIndex == 0)
                     {
-                        Car = new Car(objTitle.Text, Point[0]);
+                        Car = new Car(tb_name.Text, Point[0]);
                         MapObjects.Add(Car);
                         if (Human != null)
                         {
@@ -83,9 +82,9 @@ namespace OOP_lab4
 
                         }
                     }
-                    if (objType.SelectedIndex == 1)
+                    if (cb_add.SelectedIndex == 1)
                     {
-                        Human = new Human(objTitle.Text, Point[0]);
+                        Human = new Human(tb_name.Text, Point[0]);
                         MapObjects.Add(Human);
 
                         if (Car != null)
@@ -95,7 +94,7 @@ namespace OOP_lab4
                         }
 
                     }
-                    if (objType.SelectedIndex == 2)
+                    if (cb_add.SelectedIndex == 2)
                     {
                         if (Human != null)
                         {
@@ -105,11 +104,11 @@ namespace OOP_lab4
                             {
                                 Shape = new Image
                                 {
-                                    Width = 40, // ширина маркера
-                                    Height = 40, // высота маркера  
+                                    Width = 20, // ширина маркера
+                                    Height = 20, // высота маркера  
                                     ToolTip = "dest",
-                                    Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Kit.jpg")), // картинка
-                                    RenderTransform = new TranslateTransform { X = -20, Y = -20 } // картинка
+                                    Source = new BitmapImage(new Uri("pack://application:,,,/Resources/Mark.png")), // картинка
+                                    RenderTransform = new TranslateTransform { X = -10, Y = -10 } // картинка
                                 }
                             };
                         }
@@ -118,63 +117,28 @@ namespace OOP_lab4
                 }
 
                 Map.Markers.Clear();
-                objectList.Items.Clear();
+                lb_search.Items.Clear();
 
                 foreach (MapObject cm in MapObjects)
                 {
                     Map.Markers.Add(cm.GetMarker());
-                    objectList.Items.Add(cm.GetTitle());
+                    lb_search.Items.Add(cm.GetTitle());
                 }
 
                 Map.Markers.Add(dist);
             }
         }
 
-        private void CHm_Checked(object sender, RoutedEventArgs e)
+
+        private void lb_search_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CHm.IsChecked == true)
+            if (lb_search.SelectedIndex > -1)
             {
-                NCHm.IsChecked = false;
-                objTitle.IsEnabled = true;
-                objType.IsEnabled = true;
-                //AddM.IsEnabled = true;
-            }
-
-        }
-
-
-        private void NCHm_Checked(object sender, RoutedEventArgs e)
-        {
-            if (NCHm.IsChecked == true)
-            {
-                CHm.IsChecked = false;
-                objTitle.IsEnabled = false;
-                objType.IsEnabled = false;
-                // AddM.IsEnabled = false;
-            }
-        }
-
-        private void ObjectList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (objectList.SelectedIndex > -1)
-            {
-                PointLatLng p = MapObjects[objectList.SelectedIndex].GetFocus();
+                PointLatLng p = MapObjects[lb_search.SelectedIndex].GetFocus();
                 Map.Position = p;
             }
         }
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            objectList.UnselectAll();
-            objectList.Items.Clear();
-
-            foreach (MapObject mapObject in MapObjects)
-            {
-                if (mapObject.GetTitle().Contains(poisk.Text))
-                {
-                    objectList.Items.Add(mapObject.GetTitle());
-                }
-            }
-        }
+        
 
         private void RoutMap_Click(object sender, RoutedEventArgs e)
         {
@@ -185,7 +149,7 @@ namespace OOP_lab4
             }
             else
             {
-                MessageBox.Show("Определите пункт назначения.");
+                MessageBox.Show("Нет конечной точки маршрута");
             }
         }
 
@@ -193,6 +157,7 @@ namespace OOP_lab4
         {
             Car Car = (Car)sender;
             Car.Arrived += Human.CarArrived;
+
 
 
             Map.Position = Car.GetFocus();
@@ -208,6 +173,90 @@ namespace OOP_lab4
             Application.Current.Dispatcher.Invoke(delegate {
                 Map.Markers.Add(Car.moveTo(pass.getDestination()));
             });
+        }
+
+
+        //.....................................................................................
+        private void Mouset1_Checked(object sender, RoutedEventArgs e)
+        {
+            Map.CanDragMap = false;
+            Mouset2.IsChecked = false;
+        }
+
+        private void Mouset2_Checked(object sender, RoutedEventArgs e)
+        {
+            Map.CanDragMap = true;
+            Mouset1.IsChecked = false;
+        }
+
+        private void Secret_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (Secret.SelectedIndex)
+            {
+                case 0:
+                    Map.MapProvider = OpenStreetMapProvider.Instance;
+                    break;
+                case 1:
+                    Map.MapProvider = GMapProviders.GoogleMap;
+                    break;
+                case 2:
+                    Map.MapProvider = GMapProviders.GoogleSatelliteMap;
+                    break;
+                case 3:
+                    Map.MapProvider = GMapProviders.GoogleHybridMap;
+                    break;
+                case 4:
+                    Map.MapProvider = GMapProviders.BingMap;
+                    break;
+                case 5:
+                    Map.MapProvider = GMapProviders.YandexMap;
+                    break;
+                case 6:
+                    Map.MapProvider = GMapProviders.WikiMapiaMap;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void tb_name_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+            if (tb_name.Text == "no name ")
+            {
+                tb_name.Text = "";
+                tb_name.Opacity = 1;
+            }
+        }
+
+        private void tb_name_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (tb_name.Text == "")
+            {
+                tb_name.Opacity = 0.5;
+                tb_name.Text = "no name ";
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Map.Markers.Clear();
+            MapObjects.Clear();
+            lb_search.Items.Clear();
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            lb_search.UnselectAll();
+            lb_search.Items.Clear();
+
+            foreach (MapObject mapObject in MapObjects)
+            {
+                if (mapObject.GetTitle().Contains(tb_search.Text))
+                {
+                    lb_search.Items.Add(mapObject.GetTitle());
+                }
+            }
         }
     }
 }
